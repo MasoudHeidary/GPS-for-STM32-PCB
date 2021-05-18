@@ -1,5 +1,3 @@
-# GPS-for-STM32-PCB
-
 <h2>init</h2>
 you should change parameters in the header file
 
@@ -33,7 +31,11 @@ location in float format
 <h4><code>uint8_t GPSHour(void)</code></h4>
 <h4><code>uint8_t GPSMinute(void)</code></h4>
 <h4><code>uint8_t GPSSecond(void)</code></h4>
-clock in uint8_t(byte) format
+clock of GPS in uint8_t(byte) format
+
+#-----------------------------------------------------
+<h4>example</h4>
+find necessary codes with search <code>//<----------</code>
 
 #-----------------------------------------------------
 PCB
