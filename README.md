@@ -20,7 +20,8 @@ you should call this function to start receiving data from GPS with DMA
 after call this function send a byte data to GPS to GPS module start send data to micro
 like:<br>
 <code>
-  uint8_t M = 1;<br>
+  uint8_t M = 1;
+  <br>
   HAL_UART_Transmit(&huart1, &M, 1, 10);
 </code>
 
