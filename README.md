@@ -36,6 +36,7 @@ clock of GPS in uint8_t(byte) format
 #-----------------------------------------------------
 <h4>example</h4>
 find necessary codes with search <code>//<----------</code>
+
 #-----------------------------------------------------
 PCB
 <img src="PCB.PNG">
