@@ -36,4 +36,4 @@ clock in uint8_t(byte) format
 
 #-----------------------------------------------------
 PCB
-<img src="PCB.png>
+<img src="PCB.PNG>
