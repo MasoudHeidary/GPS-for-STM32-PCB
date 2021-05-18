@@ -24,8 +24,8 @@ like:
 	HAL_UART_Transmit(&huart1, &M, 1, 10);
 </code>
 
-<h3><code>float GPSLocationN(void)<code></h3>
-<h3><code>float GPSLocationE(void)<code></h3>
+<h3><code>float GPSLocationN(void)</code></h3>
+<h3><code>float GPSLocationE(void)</code></h3>
 location in float format
 
 
