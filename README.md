@@ -1,14 +1,15 @@
 <h2>init</h2>
 you should change parameters in the header file
 
-UART_HandleTypeDef <code>huart2</code>;
+UART_HandleTypeDef <code>huart2</code>; <br/>
 DMA_HandleTypeDef <code>hdma_usart2_rx</code>;
 
-#define UART <code>huart2</code>
+#define UART <code>huart2</code> <br/>
 #define UART_T <code>USART2</code>
 
-and of course, #include <hal...> 
-like
+and of course, <br/>
+#include <hal...> <br/>
+like <br/>
 #include <code>"stm32f1xx_hal.h"</code>
 
 <h2>usage</h2>
@@ -35,7 +36,7 @@ clock of GPS in uint8_t(byte) format
 
 #-----------------------------------------------------
 <h4>example</h4>
-find necessary codes with search <code>//<----------</code>
+find necessary codes with just searching <code>//<----------</code> in code sources
 
 #-----------------------------------------------------
 PCB
