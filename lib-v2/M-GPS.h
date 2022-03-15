@@ -14,6 +14,9 @@
 extern "C" {
 #endif
 
+// todo: local timing need to complete
+// todo: translator - reinit GPS buffer after finishing translation
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
 #include <stdio.h>
@@ -32,8 +35,10 @@ UART_HandleTypeDef __M_GPS_UART;
 char __M_GPS_Buf[__M_GPS_BufLen];
 char __M_GPS_TranslatorBuf[__M_GPS_TranslatorBufLen];
 
+
 uint8_t __M_GPS_localHur;
 uint8_t __M_GPS_localMin;
+
 /* structures ------------------------------------------------------------------*/
 struct __M_GPS_Time{
 	uint8_t hur;	// hour
@@ -62,18 +67,42 @@ struct {
 	struct __M_GPS_Date date;
 } M_GPS;
 
+
 /* public functions ------------------------------------------------------------------*/
+// init functions
 void M_GPS_init(UART_HandleTypeDef uart);
 void M_GPS_bufInit(void);
 void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute);
 
-uint8_t M_GPS_getLocalHour(void);
+// get locations
+double M_GPS_getLatitude(void);
+double M_GPS_getLongitude(void);
+double M_GPS_getHeight(void);
+double M_GPS_getGeoHeight(void);
+
+// get more information
+uint16_t M_GPS_getSpeed(void);
+uint8_t M_GPS_getNumberOfSatellites(void);
+
+// get time
+void M_GPS_getTimeString(char *str);
+uint8_t M_GPS_getHour(void);
+uint8_t M_GPS_getMinute(void);
+uint8_t M_GPS_getSecond(void);
+uint8_t M_GPS_getMilliSecond(void);
+
+// get date
+void M_GPS_getDateString(char *str);
+uint8_t M_GPS_getDay(void);
+uint8_t M_GPS_getMon(void);
+uint8_t M_GPS_getYear(void);
 
 /* private functions ------------------------------------------------------------------*/
 void __M_GPS_bufferSpliter(void);
 
 void __M_GPS_translator(void);
 void __M_GPS_translateGPRMC(void);
+void __M_GPS_translateGPGGA(void);
 
 void __M_GPS_updateTime(double);
 void __M_GPS_updateLocation(double, double *);
@@ -83,14 +112,10 @@ void __M_GPS_updateDate(uint16_t);
 bool M_GPS_test();
 
 bool __test__M_GPS_getLocalHour(void);
-/* Includes ------------------------------------------------------------------*/
+/*  ------------------------------------------------------------------*/
 
 
-
-
-
-
-/* Includes ------------------------------------------------------------------*/
+/*  ------------------------------------------------------------------*/
 #ifdef __cplusplus
 }
 #endif

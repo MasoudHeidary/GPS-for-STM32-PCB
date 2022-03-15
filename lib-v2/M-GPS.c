@@ -9,6 +9,14 @@
 
 #include "M-GPS.h"
 
+
+/**
+ * @breif initialize library by setting parameter to zero and initialing buffer
+ *
+ * @param uart get uart port that GPS is connected on
+ *
+ * @retval None
+ */
 void M_GPS_init(UART_HandleTypeDef uart) {
 	__M_GPS_UART = uart;
 
@@ -27,15 +35,34 @@ void M_GPS_init(UART_HandleTypeDef uart) {
 	M_GPS_bufInit();
 }
 
+
+/**
+ * @breif initialize GPS buffer to save incoming data
+ *
+ * @param None
+ *
+ * @retval None
+ */
 void M_GPS_bufInit(void){
 	HAL_UART_Receive_DMA(&__M_GPS_UART, (uint8_t*) __M_GPS_Buf, __M_GPS_BufLen);
 }
 
+
+/**
+ * @breif setting local time to use local time in addition to UTC
+ *
+ * @param local_hour can be negative or positive
+ * @param local_minute can be negative or positive
+ *
+ * @retval None
+ */
 void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute) {
 	__M_GPS_localHur = local_hour;
 	__M_GPS_localMin = local_minute;
 }
 
+
+//  --delete later-- just for testing purpose
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 	__M_GPS_bufferSpliter();
@@ -44,7 +71,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 //	HAL_UART_Receive_DMA(&UART, (uint8_t*) Buf, BufLen);
 }
 
-// split buffer from $ to $ and send to translator to translation
+
+/**
+ * @breif split sentences from buffer from $ to $ and replace blank parameters with space
+ * and send sentences to translator
+ *
+ * @param None
+ *
+ * @retval None
+ */
 void __M_GPS_bufferSpliter(void) {
 	uint16_t ptr = 0;
 	for (uint16_t i = 0; i < __M_GPS_BufLen; i++) {
@@ -59,11 +94,28 @@ void __M_GPS_bufferSpliter(void) {
 	}
 }
 
+
+/**
+ * @breif try to translate by different translator, after success translating
+ * all needed parameters restart GPS buffer to incoming data
+ *
+ * @param None
+ *
+ * @retval None
+ */
 void __M_GPS_translator(void) {
 	__M_GPS_translateGPRMC();
 	__M_GPS_translateGPGGA();
 }
 
+
+/**
+ * @breif obtain parameters from $GPRMC
+ *
+ * @param None
+ *
+ * @retval None
+ */
 void __M_GPS_translateGPRMC(void) {
 	char time[20] = "";
 	char lat[20] = "";	// latitude
@@ -103,6 +155,14 @@ void __M_GPS_translateGPRMC(void) {
 		__M_GPS_updateDate((uint16_t)_);
 }
 
+
+/**
+ * @breif obtain parameters from $GPGGA
+ *
+ * @param None
+ *
+ * @retval None
+ */
 void __M_GPS_translateGPGGA(void) {
 	char number_of_satelite[5] = "";
 	char height[10] = "";
@@ -132,10 +192,12 @@ void __M_GPS_translateGPGGA(void) {
 		M_GPS.hgo = _;
 }
 
+
 /**
- * @brief update time in structure base on new gived time
+ * @brief update saved time in M_GPS structure base on newTime
  *
- * @param newTime specify new time
+ * @param newTime in "hhmmss.ss" format
+ *
  * @retval None
  */
 void __M_GPS_updateTime(double newTime) {
@@ -153,11 +215,12 @@ void __M_GPS_updateTime(double newTime) {
 	M_GPS.time.sec = (uint8_t) (int_time);
 }
 
+
 /**
- * @breif convert location format to degree then update location by reference
+ * @breif convert hybrid location to geographical degree and save in given location
  *
  * @param newLocation
- * @param location	reference that newLocation gonna save on it
+ * @param location
  *
  * @retval None
  */
@@ -170,6 +233,13 @@ void __M_GPS_updateLocation(double newLocation, double *location) {
 }
 
 
+/**
+ * @breif update saved date in M_GPS structure base on newDate
+ *
+ * @param newDate in "ddmmyy" format
+ *
+ * @retval None
+ */
 void __M_GPS_updateDate(uint16_t newDate) {
 	M_GPS.date.day = (uint8_t)(newDate / 10000);
 	newDate %= 10000;
@@ -177,12 +247,12 @@ void __M_GPS_updateDate(uint16_t newDate) {
 	M_GPS.date.mon = (uint8_t)(newDate / 100);
 	newDate %= 100;
 
-	M_GPS.date.day = (uint8_t)(newDate);
+	M_GPS.date.yar = (uint8_t)(newDate);
 }
 
 
 /* get value functions ------------------------------------------------------------------*/
-
+// get locations
 double M_GPS_getLatitude(void) {
 	return M_GPS.lat;
 }
@@ -199,10 +269,16 @@ double M_GPS_getGeoHeight(void) {
 	return M_GPS.hgo;
 }
 
+// get more information
+uint16_t M_GPS_getSpeed(void) {
+	return M_GPS.spd;
+}
+
 uint8_t M_GPS_getNumberOfSatellites(void) {
 	return M_GPS.NoS;
 }
 
+// get time
 void M_GPS_getTimeString(char *str) {
 	sprintf(str, "%d:%d:%d.%d",
 			M_GPS.time.hur,
@@ -227,6 +303,25 @@ uint8_t M_GPS_getMilliSecond(void) {
 	return M_GPS.time.msc;
 }
 
+// get date
+void M_GPS_getDateString(char *str) {
+	sprintf(str, "20%d/%d/%d",
+			M_GPS.date.yar,
+			M_GPS.date.mon,
+			M_GPS.date.day);
+}
+
+uint8_t M_GPS_getDay(void) {
+	return M_GPS.date.day;
+}
+
+uint8_t M_GPS_getMon(void) {
+	return M_GPS.date.mon;
+}
+
+uint8_t M_GPS_getYear(void) {
+	return M_GPS.date.yar;
+}
 
 
 
