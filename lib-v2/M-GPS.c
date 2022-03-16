@@ -226,10 +226,10 @@ void __M_GPS_updateTime(double newTime) {
  */
 void __M_GPS_updateLocation(double newLocation, double *location) {
 	int int_loc = (int) newLocation;
-	double deg = int_loc / 100;
-	double min = int_loc - deg * 100;
+	double deg = (int)(int_loc / 100.0);
+	double min = newLocation - deg * 100.0;
 
-	*location = deg + min / 60;
+	*location = deg + min / 60.0;
 }
 
 

@@ -112,6 +112,7 @@ void __M_GPS_updateDate(uint16_t);
 bool M_GPS_test();
 
 bool __test__M_GPS_getLocalHour(void);
+bool __test__M_GPS_updateLocation(void);
 /*  ------------------------------------------------------------------*/
 
 
