@@ -1,3 +1,11 @@
+<h1>
+This readme is outdated!
+</h1>
+<h3>
+please chech out lib-v2 folder<br/>
+readme gonna update as soon as development complete.
+</h3>
+
 <h2>init</h2>
 you should change parameters in the header file
 
