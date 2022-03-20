@@ -108,7 +108,7 @@ void __M_GPS_translateGPGGA(void);
 
 void __M_GPS_updateTime(double);
 void __M_GPS_updateLocation(double, double *);
-void __M_GPS_updateDate(uint16_t);
+void __M_GPS_updateDate(uint32_t);
 
 /* tests ------------------------------------------------------------------*/
 bool M_GPS_test();

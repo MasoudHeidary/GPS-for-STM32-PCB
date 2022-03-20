@@ -232,7 +232,7 @@ void __M_GPS_updateLocation(double newLocation, double *location) {
  *
  * @retval None
  */
-void __M_GPS_updateDate(uint16_t newDate) {
+void __M_GPS_updateDate(uint32_t newDate) {
 	M_GPS.date.day = (uint8_t)(newDate / 10000);
 	newDate %= 10000;
 
