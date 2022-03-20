@@ -51,20 +51,20 @@ struct __M_GPS_Time{
 };
 
 struct __M_GPS_Date{
-	uint8_t yar;
-	uint8_t mon;
-	uint8_t day;
+	uint8_t yar;	// year
+	uint8_t mon;	// month
+	uint8_t day;	// day
 };
 
 struct {
-	double lat;
-	double lon;
+	double lat;		// latitude
+	double lon;		// longitude
 
-	double hei;
-	double hgo;
+	double hei;		// height
+	double hgo;		// height of geoid
 
-	uint8_t NoS;
-	uint16_t spd;
+	uint8_t NoS;	// number of satellites
+	uint16_t spd;	// speed
 
 	struct __M_GPS_Time time;
 	struct __M_GPS_Date date;
@@ -113,8 +113,12 @@ void __M_GPS_updateDate(uint32_t);
 /* tests ------------------------------------------------------------------*/
 bool M_GPS_test();
 
-bool __test__M_GPS_getLocalHour(void);
+bool __test__M_GPS_translateGPRMC(void);
+bool __test__M_GPS_translateGPGGA(void);
+
+bool __test__M_GPS_updateTime(void);
 bool __test__M_GPS_updateLocation(void);
+bool __test__M_GPS_updateDate(void);
 /*  ------------------------------------------------------------------*/
 
 
