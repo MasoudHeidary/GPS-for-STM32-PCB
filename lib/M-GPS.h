@@ -21,8 +21,11 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <math.h>		// use for floor
 #include <stdbool.h>
+#include <string.h>		// use for memset
+
+#include "main.h"
 
 /* defines ------------------------------------------------------------------*/
 #define __M_GPS_BufLen 300
@@ -69,9 +72,10 @@ struct {
 
 
 /* public functions ------------------------------------------------------------------*/
-// init functions
+// general functions
 void M_GPS_init(UART_HandleTypeDef uart);
-void M_GPS_bufInit(void);
+void M_GPS_bufInit(UART_HandleTypeDef uart);
+void M_GPS_BufCplt(void);
 void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute);
 
 // get locations
@@ -98,8 +102,6 @@ uint8_t M_GPS_getMon(void);
 uint8_t M_GPS_getYear(void);
 
 /* private functions ------------------------------------------------------------------*/
-void __M_GPS_bufferSpliter(void);
-
 void __M_GPS_translator(void);
 void __M_GPS_translateGPRMC(void);
 void __M_GPS_translateGPGGA(void);

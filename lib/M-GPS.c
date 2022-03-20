@@ -11,15 +11,13 @@
 
 
 /**
- * @breif initialize library by setting parameter to zero and initialing buffer
+ * @breif setting parameters to zero
  *
  * @param uart get uart port that GPS is connected on
  *
  * @retval None
  */
 void M_GPS_init(UART_HandleTypeDef uart) {
-	__M_GPS_UART = uart;
-
 	// set everything to zero
 	M_GPS.lat = 0;
 	M_GPS.lon = 0;
@@ -32,7 +30,9 @@ void M_GPS_init(UART_HandleTypeDef uart) {
 
 	M_GPS_setLocalTime(0, 0);
 
-	M_GPS_bufInit();
+	// send data to GPS module to set communication speed
+	uint8_t _ = '$';
+	HAL_UART_Transmit(&uart, &_, 1, 300);
 }
 
 
@@ -43,8 +43,9 @@ void M_GPS_init(UART_HandleTypeDef uart) {
  *
  * @retval None
  */
-void M_GPS_bufInit(void){
-	HAL_UART_Receive_DMA(&__M_GPS_UART, (uint8_t*) __M_GPS_Buf, __M_GPS_BufLen);
+void M_GPS_bufInit(UART_HandleTypeDef uart){
+	memset(__M_GPS_Buf, 0, __M_GPS_BufLen);
+	HAL_UART_Receive_DMA(&uart, (uint8_t*) __M_GPS_Buf, __M_GPS_BufLen);
 }
 
 
@@ -62,25 +63,16 @@ void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute) {
 }
 
 
-//  --delete later-- just for testing purpose
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-
-	__M_GPS_bufferSpliter();
-
-	M_GPS_bufInit();
-//	HAL_UART_Receive_DMA(&UART, (uint8_t*) Buf, BufLen);
-}
-
-
 /**
  * @breif split sentences from buffer from $ to $ and replace blank parameters with space
  * and send sentences to translator
+ * *** This function should call in "HAL_UART_RxCpltCallback" interrupt
  *
  * @param None
  *
  * @retval None
  */
-void __M_GPS_bufferSpliter(void) {
+void M_GPS_BufCplt(void) {
 	uint16_t ptr = 0;
 	for (uint16_t i = 0; i < __M_GPS_BufLen; i++) {
 		if (__M_GPS_Buf[i] == '$') {
