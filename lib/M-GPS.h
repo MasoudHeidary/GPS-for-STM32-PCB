@@ -33,8 +33,6 @@ extern "C" {
 #define __M_GPS_Knot2Km 1.85184
 
 /* variables ------------------------------------------------------------------*/
-UART_HandleTypeDef __M_GPS_UART;
-
 char __M_GPS_Buf[__M_GPS_BufLen];
 char __M_GPS_TranslatorBuf[__M_GPS_TranslatorBufLen];
 
@@ -75,7 +73,7 @@ struct {
 // general functions
 void M_GPS_init(UART_HandleTypeDef uart);
 void M_GPS_bufInit(UART_HandleTypeDef uart);
-void M_GPS_BufCplt(void);
+void M_GPS_bufCplt(void);
 void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute);
 
 // get locations

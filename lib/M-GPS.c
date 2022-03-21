@@ -72,7 +72,7 @@ void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute) {
  *
  * @retval None
  */
-void M_GPS_BufCplt(void) {
+void M_GPS_bufCplt(void) {
 	uint16_t ptr = 0;
 	for (uint16_t i = 0; i < __M_GPS_BufLen; i++) {
 		if (__M_GPS_Buf[i] == '$') {
@@ -211,7 +211,7 @@ void __M_GPS_updateTime(double newTime) {
 /**
  * @breif convert hybrid location to geographical degree and save in given location
  *
- * @param newLocation
+ * @param newLocation in dddmm.m* format
  * @param location
  *
  * @retval None
