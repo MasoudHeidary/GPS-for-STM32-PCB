@@ -23,7 +23,6 @@ bool __test__M_GPS_translateGPRMC(void) {
 
 	__M_GPS_translateGPRMC();
 
-	// note: msc in here is 78, because of floating point error
 	if (M_GPS.time.hur != 12 ||
 		M_GPS.time.min != 34 ||
 		M_GPS.time.sec != 56)
@@ -99,3 +98,6 @@ bool __test__M_GPS_updateDate(void) {
 		return false;
 	return true;
 }
+
+
+/* test local time function ------------------------------------------------------------------*/

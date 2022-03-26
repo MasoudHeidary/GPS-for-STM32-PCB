@@ -15,7 +15,6 @@ extern "C" {
 #endif
 
 // todo: local timing need to complete
-// todo: translator - reinit GPS buffer after finishing translation
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
@@ -37,8 +36,9 @@ char __M_GPS_Buf[__M_GPS_BufLen];
 char __M_GPS_TranslatorBuf[__M_GPS_TranslatorBufLen];
 
 
-uint8_t __M_GPS_localHur;
-uint8_t __M_GPS_localMin;
+// use char instead of uint8_t (to support negative number)
+signed char __M_GPS_localHur;
+signed char __M_GPS_localMin;
 
 /* structures ------------------------------------------------------------------*/
 struct __M_GPS_Time{
@@ -74,7 +74,7 @@ struct {
 void M_GPS_init(UART_HandleTypeDef uart);
 void M_GPS_bufInit(UART_HandleTypeDef uart);
 void M_GPS_bufCplt(void);
-void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute);
+void M_GPS_setLocalTime(signed char, signed char);
 
 // get locations
 double M_GPS_getLatitude(void);
@@ -117,8 +117,6 @@ bool __test__M_GPS_translateGPGGA(void);
 bool __test__M_GPS_updateTime(void);
 bool __test__M_GPS_updateLocation(void);
 bool __test__M_GPS_updateDate(void);
-/*  ------------------------------------------------------------------*/
-
 
 /*  ------------------------------------------------------------------*/
 #ifdef __cplusplus

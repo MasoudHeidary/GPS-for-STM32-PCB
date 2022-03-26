@@ -57,7 +57,7 @@ void M_GPS_bufInit(UART_HandleTypeDef uart){
  *
  * @retval None
  */
-void M_GPS_setLocalTime(uint8_t local_hour, uint8_t local_minute) {
+void M_GPS_setLocalTime(signed char local_hour, signed char local_minute) {
 	__M_GPS_localHur = local_hour;
 	__M_GPS_localMin = local_minute;
 }
@@ -294,6 +294,10 @@ uint8_t M_GPS_getSecond(void) {
 uint8_t M_GPS_getMilliSecond(void) {
 	return M_GPS.time.msc;
 }
+
+// get local time
+// todo: add functions
+// {getLocalTimeString, getLocalHour, getLocalMinute}
 
 // get date
 void M_GPS_getDateString(char *str) {
