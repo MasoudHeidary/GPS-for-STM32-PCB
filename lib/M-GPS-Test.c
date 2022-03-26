@@ -13,9 +13,10 @@ bool M_GPS_test(void) {
 			__test__M_GPS_updateLocation()	&&
 			__test__M_GPS_updateDate()		&&
 			__test__M_GPS_translateGPRMC()	&&
-			__test__M_GPS_translateGPGGA;
+			__test__M_GPS_translateGPGGA();
 }
 
+/* get translation function ------------------------------------------------------------------*/
 bool __test__M_GPS_translateGPRMC(void) {
 	strcpy(__M_GPS_TranslatorBuf, "$GPRMC,123456.78,A,1234.56789,N,54321.12345,E,2.472, ,020322,");
 	//------------------------------------time---------lat-----------lon---------speed---date---
@@ -63,6 +64,7 @@ bool __test__M_GPS_translateGPGGA(void) {
 	return true;
 }
 
+/* test update function ------------------------------------------------------------------*/
 bool __test__M_GPS_updateTime(void) {
 	double new_time = 123519.00;
 	__M_GPS_updateTime(new_time);
@@ -86,7 +88,6 @@ bool __test__M_GPS_updateLocation(void) {
 		return false;
 	return true;
 }
-
 
 bool __test__M_GPS_updateDate(void) {
 	uint32_t new_date = 120622;

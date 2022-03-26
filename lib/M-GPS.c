@@ -161,14 +161,14 @@ void __M_GPS_translateGPGGA(void) {
 	char height_of_geoid[10] = "";
 
 	sscanf(__M_GPS_TranslatorBuf,
-				"$GPRMC,"
+				"$GPGGA,"
 				"%*[0-9|.| ],"
 				"%*[0-9|.| ], N,"
 				"%*[0-9|.| ], E, 1,"
 				"%[0-9|.| ],"
 				"%*[0-9|.| ],"
-				"%[0-9|.| ], M,"
-				"%[0-9|.| ], M,",
+				"%[0-9|.| |-], M,"
+				"%[0-9|.| |-], M,",
 				number_of_satelite, height, height_of_geoid);
 
 	double _ = atoi(number_of_satelite);
@@ -314,8 +314,4 @@ uint8_t M_GPS_getMon(void) {
 uint8_t M_GPS_getYear(void) {
 	return M_GPS.date.yar;
 }
-
-
-
-
 
