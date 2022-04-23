@@ -131,7 +131,12 @@ struct {
 
 ![Function Space](./static/functionSpace.PNG)
 
+# Example
+
+**Look in example folder for more information**  
+Example Board: STM32F103C8
+
 # PCB  
 
-**This part is under designing! (previous design with some problems is available in V1 Branch**
-
+**This part is under designing! (previous design with some problems is available in V1 Branch**  
+Or just see PCB folder
