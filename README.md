@@ -64,7 +64,6 @@ uint8_t M_GPS_getMon(void);
 uint8_t M_GPS_getYear(void);
 ```
 
-
 # Data Structure
 
 > M_GPS
@@ -72,7 +71,7 @@ uint8_t M_GPS_getYear(void);
 >> lat (latitude)
 >>
 >> lon (longitude)
->> 
+>>
 >> hei (height)
 >>
 >> hgo (height of geoid)
@@ -131,3 +130,8 @@ struct {
 ![Driver Space](./static/driverSpace.PNG)
 
 ![Function Space](./static/functionSpace.PNG)
+
+# PCB  
+
+**This part is under designing! (previous design with some problems is available in V1 Branch**
+
